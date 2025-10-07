@@ -122,6 +122,8 @@ We experimented with several modeling strategies:
 | File | Description |
 |------|--------------|
 | `finetuning_moritzlaurer_mdeberta_v3.ipynb` | Main fine-tuning script |
+| `finetuning-model-timpal0lmdeberta-v3-base-squad2` | Main fine-tuning script |
+| `hcmus-foursight- classification for hard nli-crossencoder` | Main hard fine-tuning script |
 | `hcmus-foursight-processdata.ipynb` | Data preprocessing & augmentation |
 | `hcmus-foursight-submit-for-private-test.ipynb` | Inference & submission script |
 | `Classification-Aimon-s-hallucination.ipynb` | Baseline hallucination classification model |
@@ -151,6 +153,7 @@ These results demonstrate that **DeBERTa-v3**, with **optimized fine-tuning**, *
 ## 🔗 References
 
 - [Hugging Face Model — Nguyenhhh/vihallu_model_mdeberta_nli_hard30](https://huggingface.co/Nguyenhhh/vihallu_model_mdeberta_nli_hard30)  
-- [Hugging Face Transformers](https://huggingface.co/transformers/)  
+- [Hugging Face Model — Nguyenhhh/vihallu_model_mdeberta_nli_hard01](https://huggingface.co/Nguyenhhh/vihallu_model_mdeberta_nli_hard01)
+- 
 - [UIT Data Science Challenge 2025](https://github.com/nguyeudinhhaduong/UIT-Data-Science-Challenge-2025)
 
