@@ -52,7 +52,7 @@ We experimented with several modeling strategies:
 
 ## 🧠 Training Details
 
-### Model: `MoritzLaurer/deberta-v3-base`
+### Model: `timpal0l/mdeberta-v3-base-squad2`
 
 | Epoch | Training Loss | Validation Loss | Accuracy |
 |:------:|:--------------:|:----------------:|:---------:|
