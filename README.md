@@ -1,4 +1,4 @@
-# 🤓 UIT Data Science Challenge 2025 — Hallucination Classification
+# UIT Data Science Challenge 2025 — Hallucination Classification
 
 This repository contains our solution for the **UIT Data Science Challenge 2025**, focusing on **text classification** to detect **hallucination types** in generative AI outputs.
 
