@@ -1,29 +1,58 @@
-# UIT Data Science Challenge 2025
+# 🤓 UIT Data Science Challenge 2025 — Hallucination Classification
 
-This repository contains our solution for the **UIT Data Science Challenge 2025**, focusing on **text classification** tasks related to detecting hallucination types in generative AI outputs.
-
----
-
-## 📘 Project Overview
-
-The objective of this challenge is to **classify hallucination types** (e.g., *intrinsic* vs *extrinsic*) from generated text samples.  
-We explored various transformer-based models and fine-tuned them on the provided dataset using PyTorch and Hugging Face Transformers.
+This repository contains our solution for the **UIT Data Science Challenge 2025**, focusing on **text classification** to detect **hallucination types** in generative AI outputs.
 
 ---
 
-## 🧠 Models and Approaches
+## 📘 Overview
 
-We experimented with several approaches:
+### 🧩 Task Description
+The goal of this task is to **classify hallucination types** in the outputs of Large Language Models (LLMs).  
 
-1. **Baseline fine-tuning** using `MoritzLaurer/deberta-v3-base`  
-2. **Enhanced fine-tuning** with improved preprocessing, data augmentation, and learning rate scheduling  
-3. **Advanced optimization** using early stopping and custom evaluation metrics (Accuracy, F1)
+Each data sample includes:
+- **Input:** User’s question or instruction  
+- **Output:** Model-generated response  
+- **Label:** One of three categories:
+  - 🟢 **No** – Response is factual and grounded  
+  - 🟡 **Intrinsic** – Hallucination caused by internal inconsistency  
+  - 🔴 **Extrinsic** – Hallucination introducing external factual errors  
+
+This task evaluates the **factual reliability and faithfulness** of LLM responses.
 
 ---
 
-## ⚙️ Training Details
+## 🧩 Dataset Format
 
-### Normal Fine-tuning Logs
+| Field | Description |
+|:------|:-------------|
+| **Input** | User’s question or instruction |
+| **Output** | Model-generated response |
+| **Label** | One of `["No", "Intrinsic", "Extrinsic"]` |
+
+**Example:**
+```json
+{
+  "input": "Who is the current president of France?",
+  "output": "The president of France is François Hollande.",
+  "label": "Extrinsic"
+}
+```
+
+---
+
+## ⚙️ Models & Approaches
+
+We experimented with several modeling strategies:
+
+1. **Baseline Fine-tuning** — `MoritzLaurer/deberta-v3-base`  
+2. **Enhanced Fine-tuning** — Improved preprocessing, data augmentation, and learning rate scheduling  
+3. **Advanced Optimization** — Early stopping and custom evaluation metrics (Accuracy, F1-score)
+
+---
+
+## 🧠 Training Details
+
+### Model: `MoritzLaurer/deberta-v3-base`
 
 | Epoch | Training Loss | Validation Loss | Accuracy |
 |:------:|:--------------:|:----------------:|:---------:|
@@ -35,22 +64,45 @@ We experimented with several approaches:
 | 6 | 0.1388 | 0.6059 | 0.8833 |
 | 7 | 0.1032 | 0.6055 | 0.8843 |
 
-**Best model achieved:**  
-- **Validation F1:** 0.7910  
-- **Validation Accuracy:** 0.806  
-- **Training stopped early at Epoch 11**
+**Best Model:**
+- Validation **F1 = 0.7910**
+- Validation **Accuracy = 0.806**
+- Training stopped early at **Epoch 11**
 
 ---
 
-## 🧩 Experiment Results
+## 📊 Experiment Results
+
+### Training Summary — *NLi (MoritzLaurer mDeBERTa-v3)*
 
 | Step | Training Loss | Validation Loss | Accuracy | F1 |
 |:----:|:--------------:|:----------------:|:---------:|:--:|
-| 200 | No log | 0.591951 | 0.778704 | 0.777634 |
-| 400 | No log | 0.602587 | 0.806481 | 0.806432 |
-| 600 | 0.605300 | 0.669831 | 0.799074 | 0.797823 |
-| 800 | 0.605300 | 0.809728 | 0.781481 | 0.781445 |
-| 1000 | 0.283400 | 0.907666 | 0.776852 | 0.777183 |
+| 200 | — | 0.5919 | 0.7787 | 0.7776 |
+| 400 | — | 0.6026 | 0.8065 | 0.8064 |
+| 600 | 0.6053 | 0.6698 | 0.7991 | 0.7978 |
+| 800 | 0.6053 | 0.8097 | 0.7815 | 0.7814 |
+| 1000 | 0.2834 | 0.9077 | 0.7769 | 0.7772 |
+
+---
+
+### Hard NLI Training Summary
+
+| Epoch | Training Loss | Validation F1 | Improvement |
+|:------:|:--------------:|:--------------:|:-------------:|
+| 1 | 0.708 | 0.6795 | ✅ New best |
+| 2 | 0.271 | 0.7582 | ✅ Improved |
+| 3 | 0.234 | 0.7621 | ✅ Improved |
+| 4 | 0.209 | 0.7757 | ✅ Improved |
+| 5 | 0.189 | 0.7796 | ✅ Improved |
+| 6 | 0.173 | 0.7791 | — |
+| 7 | 0.160 | 0.7844 | ✅ Improved |
+| 8 | 0.145 | **0.7910** | 🏆 Best model |
+| 9 | 0.134 | 0.7834 | — |
+| 10 | 0.125 | 0.7885 | — |
+| 11 | 0.116 | 0.7864 | — |
+
+> 🧩 **Best checkpoint:** Epoch 8 → F1 = 0.7910  
+> ⏹️ Early stopping after epoch 11 to prevent overfitting.
 
 ---
 
@@ -58,44 +110,47 @@ We experimented with several approaches:
 
 | Dataset | F1 Score | Accuracy |
 |:---------:|:----------:|:-----------:|
-| Public Test | 0.81 | — |
-| Private Test (Final Leaderboard) | **0.80** | — |
+| **Public Test** | 0.81 | 0.81 |
+| **Private Test (Final Leaderboard)** | **0.80** | **0.80** |
+
+🛪️ **Result:** The fine-tuned DeBERTa-v3 model achieved strong generalization on unseen hallucination data.
 
 ---
 
-## 📄 Files in Repository
+## 📂 Repository Structure
 
 | File | Description |
 |------|--------------|
-| `finetuning_moritzlaurer_mdeberta_v3.ipynb` | Fine-tuning DeBERTa-v3 model |
-| `hcmus-foursight-processdata.ipynb` | Data preprocessing and augmentation |
-| `hcmus-foursight-submit-for-private-test.ipynb` | Inference and submission script |
-| `Classification-Aimon-s-hallucination.ipynb` | Baseline model for hallucination classification |
-| `README.md` | This file |
+| `finetuning_moritzlaurer_mdeberta_v3.ipynb` | Main fine-tuning script |
+| `hcmus-foursight-processdata.ipynb` | Data preprocessing & augmentation |
+| `hcmus-foursight-submit-for-private-test.ipynb` | Inference & submission script |
+| `Classification-Aimon-s-hallucination.ipynb` | Baseline hallucination classification model |
+| `README.md` | Project documentation (this file) |
 
 ---
 
-## 🧑‍💻 Team Information
+## 👥 Team Information
 
-- **Team:** HCMUS Foursight  
-- **Institution:** University of Information Technology (UIT), VNU-HCM  
-- **Challenge:** UIT Data Science Challenge 2025  
-- **Task:** Hallucination Classification (Intrinsic vs Extrinsic)
+**Team:** HCMUS Foursight  
+**Institution:** University of Information Technology (UIT), VNU-HCM  
+**Challenge:** UIT Data Science Challenge 2025  
+**Task:** Hallucination Classification (No / Intrinsic / Extrinsic)
 
 ---
 
 ## 🏁 Summary
 
-Our approach achieved competitive results with:
-- **Best F1 = 0.81 (Public Test)**
-- **Final F1 = 0.80 (Private Test)**
+Our final model achieved:
+- 🥇 **F1 = 0.81** (Public Test)
+- 🥈 **F1 = 0.80** (Private Test)
 
-This demonstrates that DeBERTa-v3 fine-tuning with careful learning rate scheduling and early stopping provides strong generalization for hallucination classification tasks.
+These results demonstrate that **DeBERTa-v3**, with **optimized fine-tuning**, **data augmentation**, and **early stopping**, provides **robust performance** for hallucination detection in LLM outputs.
 
 ---
 
-### 🔗 Reference
+## 🔗 References
 
-- [Hugging Face Transformers](https://huggingface.co/transformers/)
+- [Hugging Face Model — Nguyenhhh/vihallu_model_mdeberta_nli_hard30](https://huggingface.co/Nguyenhhh/vihallu_model_mdeberta_nli_hard30)  
+- [Hugging Face Transformers](https://huggingface.co/transformers/)  
 - [UIT Data Science Challenge 2025](https://github.com/nguyeudinhhaduong/UIT-Data-Science-Challenge-2025)
 
