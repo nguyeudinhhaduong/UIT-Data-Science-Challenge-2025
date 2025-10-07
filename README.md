@@ -154,6 +154,5 @@ These results demonstrate that **DeBERTa-v3**, with **optimized fine-tuning**, *
 
 - [Hugging Face Model — Nguyenhhh/vihallu_model_mdeberta_nli_hard30](https://huggingface.co/Nguyenhhh/vihallu_model_mdeberta_nli_hard30)  
 - [Hugging Face Model — Nguyenhhh/vihallu_model_mdeberta_nli_hard01](https://huggingface.co/Nguyenhhh/vihallu_model_mdeberta_nli_hard01)
-- 
 - [UIT Data Science Challenge 2025](https://github.com/nguyeudinhhaduong/UIT-Data-Science-Challenge-2025)
 
